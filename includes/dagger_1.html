@@ -1,0 +1,91 @@
+<section>
+    creamos una interfaz CarComponent.kt
+
+    <pre><code>
+package com.example
+
+import com.example.daggerexample.Car
+import dagger.Component
+
+@Component
+interface CarComponent {
+    fun getCar() : Car
+}
+  </code></pre>
+    Que va a encargarse de devolvernos un vehiculo
+</section>
+<section>
+    agregamos "@Inject" al constructor de Car
+
+    <pre><code>
+import android.util.Log
+import javax.inject.Inject
+
+class Car @Inject constructor(var engine: Engine, var wheels : Wheels) {
+
+    fun driver(){
+        Log.d("Car", "runnnnnnn")
+
+    }
+}
+  </code></pre>
+</section>
+
+<section>
+    agregamos "@Inject" al constructor de Wheels
+
+<pre><code>
+import javax.inject.Inject
+
+class Wheels {
+
+    @Inject
+    constructor()
+}
+</code></pre>
+</section>
+
+<section>
+    agregamos "@Inject" al constructor de Engine
+
+<pre><code>
+import javax.inject.Inject
+
+class Engine {
+    @Inject
+    constructor()
+
+}
+</code></pre>
+</section>
+
+</section>
+
+<section>
+    Se hace un build para que genere las clases que vamos a necesitar, como por ejemplo DaggerCarComponent que vamos a usar en MainActivity.kt
+
+    <pre><code>
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.example.CarComponent
+import com.example.DaggerCarComponent
+
+class MainActivity : AppCompatActivity() {
+
+lateinit var car : Car
+lateinit var component : CarComponent
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+
+    component = DaggerCarComponent.create()
+
+    car = component.getCar()
+
+    car.driver()
+
+    }
+}
+</code></pre>
+</section>

@@ -1,0 +1,23 @@
+<section>
+    Instalación de Dagger
+</section>
+<section>
+    En build.gradle(Module: app)
+
+    <pre><code>
+apply plugin: "kotlin-kapt"
+
+kapt {
+  generateStubs = true
+}
+
+dependencies {
+
+	  ...
+
+ implementation 'com.google.dagger:dagger:2.23.2'
+ kapt 'com.google.dagger:dagger-compiler:2.23.2'
+}
+  </code></pre>
+
+</section>

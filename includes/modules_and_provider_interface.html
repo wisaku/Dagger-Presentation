@@ -1,0 +1,83 @@
+<section>
+    Interfaces
+</section>
+
+<section>
+    Vamos a combiar la clase Engine por una interfaz
+    <pre><code>
+interface Engine {
+
+    fun start()
+}
+  </code></pre>
+
+</section>
+
+<section>
+    Que lo va a implementar
+    <pre><code>
+import android.util.Log
+import javax.inject.Inject
+
+class PetrolEngine : Engine {
+    @Inject
+    constructor()
+
+    override fun start() {
+        Log.d("Car", "Petrol engine started")
+    }
+}
+  </code></pre>
+
+</section>
+<section>
+    y
+    <pre><code>
+import android.util.Log
+import javax.inject.Inject
+
+class DieselEngine : Engine {
+    @Inject
+    constructor()
+
+    override fun start() {
+        Log.d("Car", "Diesel engine started")
+    }
+}
+  </code></pre>
+
+</section>
+
+<section>
+  <pre><code>
+@Module
+abstract class DieselEngineModule {
+
+    @Binds
+    abstract fun bindEngine(engine: DieselEngine) : Engine
+}
+  </code></pre>
+</section>
+<section>
+  <pre><code>
+@Module
+abstract class PetrolEngineModule {
+
+    @Binds
+    abstract fun bindEngine(engine: PetrolEngine) : Engine
+}
+  </code></pre>
+
+</section>
+<section>
+  <pre><code>
+@Component (modules = [WheelsModule::class, PetrolEngineModule::class])
+interface CarComponent {
+    fun getCar() : Car
+
+    fun inject(mainActivity: MainActivity)
+}
+  </code></pre>
+
+</section>
+

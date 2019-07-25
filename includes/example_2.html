@@ -1,0 +1,51 @@
+<section>
+    <img class="noborder" data-src="img/example_2.png" />
+</section>
+
+<section>
+    agregamos un constructor mas complejo
+
+    <pre><code>
+package com.example.daggerexample
+
+import android.util.Log
+
+class Car constructor(var engine: Engine, var wheels : Wheels) {
+
+
+    fun driver(){
+        Log.d("Car", "runnnnnnn")
+
+    }
+}
+
+  </code></pre>
+
+</section>
+
+<section>
+    y en MainActivity.kt
+
+    <pre><code>
+package com.example.daggerexample
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var car : Car
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        car = Car(Engine(),Wheels())
+
+        car.driver()
+
+    }
+}
+  </code></pre>
+
+</section>

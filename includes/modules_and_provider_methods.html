@@ -1,0 +1,89 @@
+<section>
+    Clases anonimas
+</section>
+
+<section>
+    Para las clases de terceros Dagger nos proporciona una solución
+</section>
+<section>
+    <h2>@Provides</h2>
+</section>
+
+<section>
+    Complejizamos Wheels
+    <pre><code>
+class Wheels(var rims: Rims, var tires: Tires) {
+    //La clase no es nuestra y no podemos agregarle @Inject
+}
+  </code></pre>
+
+</section>
+<section>
+    <pre><code>
+import android.util.Log
+
+class Tires {
+    //La clase no es nuestra y no podemos agregarle @Inject
+
+    fun inflate() {
+        Log.d("Car", "Tires inflated")
+    }
+
+}
+  </code></pre>
+
+</section>
+
+<section>
+    Creamos un objeto WheelsModule
+    <pre><code>
+import dagger.Module
+import dagger.Provides
+
+@Module
+object WheelsModule {
+
+    @JvmStatic
+    @Provides
+    fun provideRims() : Rims {
+      return Rims()
+    }
+
+    @JvmStatic
+    @Provides
+    fun provideTires() : Tires {
+        val tires = Tires()
+        tires.inflate()
+        return tires
+    }
+
+    @JvmStatic
+    @Provides
+        fun provideWheels(rims: Rims, tires: Tires) : Wheels {
+        return Wheels(rims,tires)
+    }
+}
+  </code></pre>
+
+</section>
+<section>
+    Agregamos el modulo a CarComponent
+    <pre><code>
+import com.example.daggerexample.Car
+import com.example.daggerexample.MainActivity
+import com.example.daggerexample.WheelsModule
+import dagger.Component
+
+@Component (modules = [WheelsModule::class])
+interface CarComponent {
+    fun getCar() : Car
+
+    fun inject(mainActivity: MainActivity)
+}
+  </code></pre>
+
+</section>
+<section>
+    <img class="noborder" data-src="img/result_provides_1.png" />
+</section>
+

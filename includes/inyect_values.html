@@ -1,0 +1,109 @@
+<section>
+    Inyeccion de valores
+</section>
+
+<section>
+    <pre><code>
+import android.util.Log
+
+class PetrolEngine constructor(var horsePower: Int) : Engine {
+
+    override fun start() {
+        Log.d("Car", "Petrol engine started. Horsepower: $horsePower")
+    }
+}
+  </code></pre>
+</section>
+<section>
+    <pre><code>
+import android.util.Log
+
+class DieselEngine constructor(var horsePower: Int) : Engine {
+
+    override fun start() {
+        Log.d("Car", "Diesel engine started, Horsepower : $horsePower")
+    }
+}
+  </code></pre>
+
+</section>
+<section>
+    y
+    <pre><code>
+import android.util.Log
+import javax.inject.Inject
+
+class DieselEngine : Engine {
+    @Inject
+    constructor()
+
+    override fun start() {
+        Log.d("Car", "Diesel engine started")
+    }
+}
+  </code></pre>
+
+</section>
+
+<section>
+  <pre><code>
+import com.example.daggerexample.car.DieselEngine
+import com.example.daggerexample.car.Engine
+import dagger.Module
+import dagger.Provides
+
+@Module
+class DieselEngineModule(private var horsePower: Int) {
+
+    @Provides
+    fun provideEngine() : Engine {
+        return DieselEngine(horsePower)
+    }
+}
+  </code></pre>
+</section>
+<section>
+  <pre><code>
+@Component (modules = [WheelsModule::class, PetrolEngineModule::class])
+interface CarComponent {
+    fun getCar() : Car
+
+    fun inject(mainActivity: MainActivity)
+}
+  </code></pre>
+
+</section>
+<section>
+  <pre><code>
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.example.daggerexample.car.Car
+import com.example.daggerexample.dagger.*
+import javax.inject.Inject
+
+class MainActivity : AppCompatActivity() {
+
+    @Inject lateinit var car : Car
+    lateinit var component : CarComponent
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+
+
+        component = DaggerCarComponent.builder()
+            .petrolEngineModule(PetrolEngineModule(100))
+            .build()
+
+        component.inject(this)
+
+        car.driver()
+
+    }
+}
+  </code></pre>
+
+</section>
+
+

@@ -1,0 +1,47 @@
+<section>
+    <h2>
+        Ejemplo
+    </h2>
+</section>
+<section>
+    En MainActivity.kt
+
+    <pre><code>
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var car : Car
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        car = Car()
+
+        car.driver()
+
+    }
+
+  </code></pre>
+
+</section>
+<section>
+    creamos un archivo Car.kt
+
+    <pre><code>
+import android.util.Log
+
+class Car {
+
+
+    fun driver(){
+        Log.d("Car", "runnnnnnn")
+
+    }
+}
+
+  </code></pre>
+
+</section>

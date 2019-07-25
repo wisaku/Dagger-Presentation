@@ -1,0 +1,39 @@
+<section>
+    Metodos en la construcción
+</section>
+
+<section>
+    Podemos necesitar correr un metodo para la creación de una dependencia
+
+</section>
+
+<section>
+    <pre><code>
+import android.util.Log
+import javax.inject.Inject
+
+class Car @Inject constructor(val wheels : Wheels) {
+
+    @Inject lateinit var engine :  Engine
+
+    @Inject
+    fun enableRemote(remote: Remote) {
+        remote.setListener(this)
+    }
+
+
+    fun driver(){
+        Log.d("Car", "runnnnnnn")
+
+    }
+}
+
+  </code></pre>
+
+</section>
+<section>
+    El orden que usa para crear esta dependencia es :
+    <li>El constructor</li>
+    <li>Injecta el colaborador fuera del constructor</li>
+    <li>Injecta el metodo</li>
+</section>
